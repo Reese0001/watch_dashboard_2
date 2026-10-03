@@ -1,0 +1,85 @@
+<template>
+  <div class="weather-container">
+    <div class="weather-icon-box">
+      <text class="weather-icon">{{ icon }}</text>
+    </div>
+    <div class="weather-details">
+      <text class="weather-temp">{{ temperature }}°</text>
+      <text class="weather-desc">{{ description }}</text>
+    </div>
+    <div class="weather-extra">
+      <text class="weather-hint">适宜户外活动</text>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    icon: {
+      type: String,
+      default: '☀️'
+    },
+    temperature: {
+      type: Number,
+      default: 25
+    },
+    description: {
+      type: String,
+      default: '晴'
+    }
+  }
+}
+</script>
+
+<style>
+.weather-container {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 15px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+}
+
+.weather-icon-box {
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.weather-icon {
+  font-size: 28px;
+}
+
+.weather-details {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 15px;
+}
+
+.weather-temp {
+  font-size: 22px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.weather-desc {
+  font-size: 13px;
+  color: #888888;
+  margin-top: 2px;
+}
+
+.weather-extra {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.weather-hint {
+  font-size: 11px;
+  color: #4cd964;
+}
+</style>

@@ -1,0 +1,392 @@
+<template>
+  <div class="dashboard">
+    <swiper class="dashboard-swiper" index="{{ currentPage }}" indicator="true" loop="false" duration="260" onchange="onPageChange">
+      <div class="page">
+        <div class="page-inner weather-page-inner">
+          <div class="page-header"><text class="page-title">{{ city }} · {{ weatherSource }}</text></div>
+          <stack class="weather-stage">
+            <image class="weather-scene" src="/common/images/weather/hero/thunderstorm-city-v2.png"></image>
+            <div class="weather-reading">
+              <text class="weather-temp">{{ weatherTemp }}°</text>
+              <text class="weather-name">{{ weatherText }}</text>
+            </div>
+            <div class="forecast-card">
+              <stack class="forecast-item">
+                <text class="forecast-day">{{ forecastDay1 }}</text>
+                <div class="forecast-icon-slot"><image class="forecast-icon" src="{{ forecastIcon1 }}"></image></div>
+                <text class="forecast-temp">{{ forecastHigh1 }}°/{{ forecastLow1 }}°</text>
+              </stack>
+              <div class="forecast-divider"></div>
+              <stack class="forecast-item">
+                <text class="forecast-day">{{ forecastDay2 }}</text>
+                <div class="forecast-icon-slot"><image class="forecast-icon" src="{{ forecastIcon2 }}"></image></div>
+                <text class="forecast-temp">{{ forecastHigh2 }}°/{{ forecastLow2 }}°</text>
+              </stack>
+              <div class="forecast-divider"></div>
+              <stack class="forecast-item">
+                <text class="forecast-day">{{ forecastDay3 }}</text>
+                <div class="forecast-icon-slot"><image class="forecast-icon forecast-icon-sun" src="{{ forecastIcon3 }}"></image></div>
+                <text class="forecast-temp">{{ forecastHigh3 }}°/{{ forecastLow3 }}°</text>
+              </stack>
+            </div>
+            <div class="weather-pill weather-pill-left">
+              <text class="weather-symbol cyan">♨</text><text class="weather-caption">体感</text><text class="weather-value">{{ feelsLike }}°</text>
+            </div>
+            <div class="weather-pill weather-pill-center">
+              <text class="weather-symbol blue">●</text><text class="weather-caption">湿度</text><text class="weather-value">{{ humidity }}%</text>
+            </div>
+            <div class="weather-pill weather-pill-right">
+              <image class="wind-icon" src="/common/images/weather/strong-wind.png"></image><text class="weather-caption">风速</text><text class="weather-value">{{ windSpeed }} km/h</text>
+            </div>
+          </stack>
+        </div>
+      </div>
+
+      <div class="page">
+        <div class="page-inner">
+          <div class="page-header"><text class="page-title">今日运动</text></div>
+          <stack class="activity-stage">
+            <progress class="ring-base ring-outer" type="arc" percent="100"></progress>
+            <progress class="ring-progress move-ring ring-outer" type="arc" percent="{{ movePercent }}"></progress>
+            <progress class="ring-base ring-middle" type="arc" percent="100"></progress>
+            <progress class="ring-progress exercise-ring ring-middle" type="arc" percent="{{ exercisePercent }}"></progress>
+            <progress class="ring-base ring-inner" type="arc" percent="100"></progress>
+            <progress class="ring-progress stand-ring ring-inner" type="arc" percent="{{ standPercent }}"></progress>
+            <div class="ring-arrow arrow-outer"><text class="ring-arrow-text">→</text></div>
+            <div class="ring-arrow arrow-middle"><text class="ring-arrow-text">→</text></div>
+            <div class="ring-arrow arrow-inner"><text class="ring-arrow-text">↑</text></div>
+            <div class="goal-list">
+              <div class="goal-line"><image class="goal-icon" src="/common/images/metrics/calories.png"></image><text class="goal-number move-text">{{ calories }}</text><text class="goal-total">/500 千卡</text></div>
+              <div class="goal-line"><image class="goal-icon" src="/common/images/metrics/active-minutes.png"></image><text class="goal-number exercise-text">{{ activeMinutes }}</text><text class="goal-total">/30 分钟</text></div>
+              <div class="goal-line"><image class="goal-icon" src="/common/images/metrics/stand.png"></image><text class="goal-number stand-text">{{ standHours }}</text><text class="goal-total">/12 小时</text></div>
+            </div>
+            <div class="activity-bottom-mask"></div>
+            <div class="activity-grid">
+              <div class="activity-card card-top-left"><image class="card-icon" src="/common/images/metrics/steps.png"></image><text class="card-value">{{ stepsDisplay }}</text><text class="card-unit">步</text></div>
+              <div class="activity-card card-top-right"><image class="card-icon" src="/common/images/metrics/distance.png"></image><text class="card-value">{{ distance }}</text><text class="card-unit">km</text></div>
+              <div class="activity-card card-bottom-left"><image class="card-icon" src="/common/images/metrics/elevation.png"></image><text class="card-unit">爬楼</text><text class="card-value">{{ floors }}</text></div>
+              <div class="activity-card card-bottom-right"><image class="card-icon" src="/common/images/metrics/stand.png"></image><text class="card-unit">站立提醒</text><text class="card-value">{{ standReminder }}次</text></div>
+            </div>
+          </stack>
+        </div>
+      </div>
+
+      <div class="page">
+        <div class="page-inner">
+          <div class="page-header"><text class="page-title">健康概览</text></div>
+          <stack class="health-stage">
+            <image class="heart-image" src="/common/images/metrics/heart.png"></image>
+            <div class="heart-copy">
+              <text class="heart-caption">当前</text>
+              <div class="heart-number"><text class="heart-value">{{ heartRate }}</text><text class="heart-unit">次/分</text></div>
+              <text class="heart-history">73次/分 · 21分钟前</text>
+            </div>
+            <div class="health-row health-row-1"><image class="health-icon" src="/common/images/health/oxygen.png"></image><text class="health-label">血氧</text><text class="health-value">97%</text></div>
+            <div class="health-row health-row-2"><image class="health-icon" src="/common/images/metrics/respiration.png"></image><text class="health-label">呼吸</text><text class="health-value">15.0 次/分</text></div>
+            <div class="health-row health-row-3"><image class="health-icon" src="/common/images/health/temperature.png"></image><text class="health-label">腕温</text><text class="health-value">+0.2°</text></div>
+            <div class="health-row health-row-4"><image class="health-icon" src="/common/images/metrics/hrv.png"></image><text class="health-label">HRV</text><text class="health-value">40 ms</text></div>
+          </stack>
+        </div>
+      </div>
+
+    </swiper>
+  </div>
+</template>
+
+<script>
+import fetch from '@system.fetch'
+import geolocation from '@system.geolocation'
+import storage from '@system.storage'
+import network from '@system.network'
+import sensor from '@system.sensor'
+import health from '@service.health'
+
+const WEATHER_KEY = 'dashboard_weather_s4_v1'
+const POSITION_KEY = 'dashboard_position_s4_v1'
+const STEPS_KEY = 'dashboard_steps_s4_v1'
+const WEATHER_IMAGE_ROOT = '/common/images/weather/'
+
+export default {
+  private: {
+    previewMode: true,
+    currentPage: 0,
+    currentTime: '00:00',
+    city: '重庆',
+    weatherSource: '实时',
+    weatherTemp: 30,
+    feelsLike: 36,
+    humidity: 81,
+    windSpeed: 6,
+    weatherText: '雷雨',
+    forecastDay1: '今天', forecastHigh1: 36, forecastLow1: 27, forecastIcon1: `${WEATHER_IMAGE_ROOT}heavy-rain.png`,
+    forecastDay2: '明天', forecastHigh2: 30, forecastLow2: 26, forecastIcon2: `${WEATHER_IMAGE_ROOT}heavy-rain.png`,
+    forecastDay3: '周日', forecastHigh3: 34, forecastLow3: 26, forecastIcon3: `${WEATHER_IMAGE_ROOT}partly-cloudy-day.png`,
+    steps: 8350,
+    calories: 334,
+    activeMinutes: 30,
+    standHours: 9,
+    floors: 6,
+    standReminder: 2,
+    heartRate: 68,
+    latitude: 29.563,
+    longitude: 106.552,
+    timeTimer: null,
+    weatherTimer: null,
+    lastStepAt: 0,
+    networkSubscribed: false,
+    accelerometerSubscribed: false
+  },
+
+  computed: {
+    stepsDisplay() { return this.formatNumber(this.steps) },
+    distance() { return (this.steps * 0.0007).toFixed(1) },
+    movePercent() { return this.previewMode ? 100 : this.percent(this.calories, 500) },
+    exercisePercent() { return this.previewMode ? 100 : this.percent(this.activeMinutes, 30) },
+    standPercent() { return this.previewMode ? 86 : this.percent(this.standHours, 12) }
+  },
+
+  onInit() {
+    const healthPrototype = health && health.nativeInst ? Object.getPrototypeOf(health.nativeInst) : null
+    console.info(`HEALTH_API_PROBE keys=${Object.keys(health || {}).join(',')} dataTypes=${JSON.stringify(health.DATA_TYPES || {})} nativeMethods=${healthPrototype ? Object.getOwnPropertyNames(healthPrototype).join(',') : ''}`)
+    this.updateTime()
+    if (!this.previewMode) {
+      this.loadWeatherCache()
+      this.loadPositionCache()
+      this.loadStepsCache()
+    }
+  },
+  onShow() {
+    this.startTimers()
+    if (this.previewMode) return
+    this.watchNetwork()
+    this.locateAndRefresh()
+    this.subscribeActivity()
+  },
+  onHide() { this.stopRuntime() },
+  onDestroy() { this.stopRuntime() },
+  onPageChange(event) { this.currentPage = Number(event.index || 0) },
+  pad2(value) { return value < 10 ? `0${value}` : `${value}` },
+  updateTime() {
+    const now = new Date()
+    this.currentTime = `${this.pad2(now.getHours())}:${this.pad2(now.getMinutes())}`
+  },
+  percent(value, goal) { return Math.max(0, Math.min(100, Number(value) * 100 / Number(goal))) },
+  formatNumber(value) {
+    const text = `${Math.max(0, Math.floor(Number(value) || 0))}`
+    return text.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  },
+  startTimers() {
+    if (!this.timeTimer) this.timeTimer = setInterval(() => { this.updateTime() }, 1000)
+    if (!this.previewMode && !this.weatherTimer) this.weatherTimer = setInterval(() => { this.refreshWeather() }, 900000)
+  },
+  stopRuntime() {
+    if (this.timeTimer) { clearInterval(this.timeTimer); this.timeTimer = null }
+    if (this.weatherTimer) { clearInterval(this.weatherTimer); this.weatherTimer = null }
+    if (this.networkSubscribed) { network.unsubscribe(); this.networkSubscribed = false }
+    if (this.accelerometerSubscribed) { sensor.unsubscribeAccelerometer(); this.accelerometerSubscribed = false }
+  },
+  watchNetwork() {
+    network.getType({ success: data => { if (data.type !== 'none') this.refreshWeather() } })
+    network.subscribe({ callback: data => { if (data.type !== 'none') this.refreshWeather() }, fail: () => { this.networkSubscribed = false } })
+    this.networkSubscribed = true
+  },
+  locateAndRefresh() {
+    geolocation.getLocation({
+      timeout: 12000,
+      success: data => {
+        this.latitude = Number(data.latitude)
+        this.longitude = Number(data.longitude)
+        this.savePosition()
+        this.reverseGeocode()
+        this.refreshWeather()
+      },
+      fail: () => { this.refreshWeather() }
+    })
+  },
+  refreshWeather() {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${this.latitude}&longitude=${this.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=3`
+    fetch.fetch({ url: url, responseType: 'json' }).then(result => {
+      let data = result && result.data !== undefined ? result.data : result
+      if (data && data.data && !data.current) data = data.data
+      if (typeof data === 'string') data = JSON.parse(data)
+      if (!data || !data.current) throw new Error('weather data invalid')
+      this.weatherTemp = Math.round(data.current.temperature_2m)
+      this.feelsLike = Math.round(data.current.apparent_temperature)
+      this.humidity = Math.round(data.current.relative_humidity_2m)
+      this.windSpeed = Math.round(data.current.wind_speed_10m)
+      this.weatherText = this.weatherCodeText(data.current.weather_code)
+      this.applyForecast(data.daily)
+      this.weatherSource = '实时'
+      this.saveWeatherCache()
+    }).catch(() => { this.weatherSource = '缓存' })
+  },
+  applyForecast(daily) {
+    if (!daily || !daily.time) return
+    this.forecastDay1 = '今天'
+    this.forecastDay2 = '明天'
+    this.forecastDay3 = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][new Date(daily.time[2]).getDay()]
+    this.forecastHigh1 = Math.round(daily.temperature_2m_max[0]); this.forecastLow1 = Math.round(daily.temperature_2m_min[0])
+    this.forecastHigh2 = Math.round(daily.temperature_2m_max[1]); this.forecastLow2 = Math.round(daily.temperature_2m_min[1])
+    this.forecastHigh3 = Math.round(daily.temperature_2m_max[2]); this.forecastLow3 = Math.round(daily.temperature_2m_min[2])
+    this.forecastIcon1 = this.weatherCodeIcon(daily.weather_code[0])
+    this.forecastIcon2 = this.weatherCodeIcon(daily.weather_code[1])
+    this.forecastIcon3 = this.weatherCodeIcon(daily.weather_code[2])
+  },
+  weatherCodeText(code) {
+    const value = Number(code)
+    if (value === 0) return '晴'
+    if (value <= 2) return '多云'
+    if (value === 3) return '阴'
+    if (value === 45 || value === 48) return '雾'
+    if (value >= 51 && value <= 57) return '小雨'
+    if (value >= 61 && value <= 67) return value >= 66 ? '雨夹雪' : '降雨'
+    if (value >= 71 && value <= 77) return '降雪'
+    if (value >= 80 && value <= 82) return '阵雨'
+    if (value >= 85 && value <= 86) return '阵雪'
+    if (value >= 95) return '雷雨'
+    return '多云'
+  },
+  weatherCodeIcon(code) {
+    const value = Number(code)
+    let name = 'clear-day'
+    if (value === 1 || value === 2) name = 'partly-cloudy-day'
+    else if (value === 3) name = 'overcast'
+    else if (value === 45 || value === 48) name = 'fog'
+    else if (value >= 51 && value <= 57) name = 'light-rain'
+    else if (value >= 61 && value <= 65) name = value >= 63 ? 'heavy-rain' : 'light-rain'
+    else if (value === 66 || value === 67) name = 'sleet'
+    else if (value >= 71 && value <= 77) name = value >= 75 ? 'heavy-snow' : 'light-snow'
+    else if (value >= 80 && value <= 82) name = value === 82 ? 'heavy-rain' : 'light-rain'
+    else if (value >= 85 && value <= 86) name = value === 86 ? 'heavy-snow' : 'light-snow'
+    else if (value >= 95) name = 'thunderstorm'
+    return `${WEATHER_IMAGE_ROOT}${name}.png`
+  },
+  reverseGeocode() {
+    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.latitude}&longitude=${this.longitude}&localityLanguage=zh`
+    fetch.fetch({ url: url, responseType: 'json' }).then(result => {
+      let data = result && result.data !== undefined ? result.data : result
+      if (typeof data === 'string') data = JSON.parse(data)
+      if (data && data.city) this.city = data.city
+      else if (data && data.locality) this.city = data.locality
+    }).catch(() => {})
+  },
+  subscribeActivity() {
+    sensor.subscribeAccelerometer({ interval: 'normal', callback: data => { this.handleAcceleration(data) }, fail: () => { this.accelerometerSubscribed = false } })
+    this.accelerometerSubscribed = true
+  },
+  handleAcceleration(data) {
+    const magnitude = Math.sqrt(data.x * data.x + data.y * data.y + data.z * data.z)
+    const normalized = magnitude > 4 ? magnitude / 9.8 : magnitude
+    const now = Date.now()
+    if (normalized > 1.16 && now - this.lastStepAt > 360) {
+      this.lastStepAt = now
+      this.steps += 1
+      this.calories = Math.round(this.steps * 0.04)
+      this.activeMinutes = Math.min(99, Math.round(this.steps / 105))
+      if (this.steps % 20 === 0) this.saveStepsCache()
+    }
+  },
+  saveWeatherCache() {
+    storage.set({ key: WEATHER_KEY, value: JSON.stringify({
+      city: this.city, weatherTemp: this.weatherTemp, feelsLike: this.feelsLike, humidity: this.humidity, windSpeed: this.windSpeed, weatherText: this.weatherText,
+      forecastDay1: this.forecastDay1, forecastDay2: this.forecastDay2, forecastDay3: this.forecastDay3,
+      forecastHigh1: this.forecastHigh1, forecastHigh2: this.forecastHigh2, forecastHigh3: this.forecastHigh3,
+      forecastLow1: this.forecastLow1, forecastLow2: this.forecastLow2, forecastLow3: this.forecastLow3,
+      forecastIcon1: this.forecastIcon1, forecastIcon2: this.forecastIcon2, forecastIcon3: this.forecastIcon3
+    }) })
+  },
+  loadWeatherCache() {
+    storage.get({ key: WEATHER_KEY, success: value => {
+      if (!value) return
+      try { const data = JSON.parse(value); Object.keys(data).forEach(key => { this[key] = data[key] }) } catch (error) {}
+    } })
+  },
+  savePosition() { storage.set({ key: POSITION_KEY, value: JSON.stringify({ latitude: this.latitude, longitude: this.longitude }) }) },
+  loadPositionCache() {
+    storage.get({ key: POSITION_KEY, success: value => {
+      if (!value) return
+      try { const data = JSON.parse(value); this.latitude = Number(data.latitude); this.longitude = Number(data.longitude) } catch (error) {}
+    } })
+  },
+  saveStepsCache() { storage.set({ key: STEPS_KEY, value: JSON.stringify({ date: new Date().toDateString(), steps: this.steps }) }) },
+  loadStepsCache() {
+    storage.get({ key: STEPS_KEY, success: value => {
+      if (!value) return
+      try {
+        const data = JSON.parse(value)
+        if (data.date === new Date().toDateString()) {
+          this.steps = Number(data.steps)
+          this.calories = Math.round(this.steps * 0.04)
+          this.activeMinutes = Math.min(99, Math.round(this.steps / 105))
+        }
+      } catch (error) {}
+    } })
+  }
+}
+</script>
+
+<style>
+.dashboard, .dashboard-swiper, .page { width: 100%; height: 100%; background-color: #000000; }
+.dashboard-swiper { indicator-color: #3a3b3f; indicator-selected-color: #ffffff; indicator-size: 7px; indicator-bottom: 13px; }
+.page { align-items: center; justify-content: center; }
+.page-inner { width: 420px; height: 466px; padding-top: 22px; padding-bottom: 31px; flex-direction: column; align-items: center; }
+.weather-page-inner { padding-top: 39px; }
+.page-header { width: 360px; height: 34px; align-items: center; justify-content: center; }
+.page-title { width: 360px; color: #ffffff; font-size: 23px; font-weight: bold; text-align: center; }
+
+.weather-stage { width: 420px; height: 360px; }
+.weather-scene { width: 400px; height: 220px; margin-left: 10px; margin-top: 0; object-fit: cover; opacity: 0.95; }
+.weather-reading { width: 200px; height: 105px; margin-left: 110px; margin-top: 94px; flex-direction: column; align-items: center; justify-content: center; }
+.weather-temp { width: 200px; height: 70px; color: #ffffff; font-size: 64px; line-height: 70px; font-weight: bold; text-align: center; }
+.weather-name { width: 160px; color: #ffffff; font-size: 20px; text-align: center; }
+.forecast-card { width: 400px; height: 167px; margin-left: -5px; margin-top: 193px; border-radius: 84px; background-color: #0b1521; border-width: 1px; border-color: #253345; flex-direction: row; align-items: center; justify-content: center; }
+.forecast-item { width: 120px; height: 157px; }
+.forecast-divider { width: 1px; height: 118px; margin-top: 31px; background-color: #344150; }
+.forecast-day { width: 90px; height: 22px; margin-left: 15px; margin-top: 49px; color: #d0d4db; font-size: 16px; text-align: center; }
+.forecast-icon-slot { width: 58px; height: 48px; margin-left: 31px; margin-top: 70px; align-items: center; justify-content: center; }
+.forecast-icon { width: 52px; height: 52px; object-fit: contain; }
+.forecast-icon-sun { margin-top: -5px; }
+.forecast-temp { width: 80px; height: 22px; margin-left: 20px; margin-top: 112px; color: #ffffff; font-size: 16px; text-align: center; }
+.weather-pill { height: 43px; border-radius: 22px; background-color: #11151d; border-width: 1px; border-color: #252b35; flex-direction: row; align-items: center; justify-content: center; }
+.weather-pill-left { width: 132px; margin-left: 2px; margin-top: 201px; }
+.weather-pill-center { width: 128px; margin-left: 138px; margin-top: 201px; }
+.weather-pill-right { width: 146px; margin-left: 274px; margin-top: 201px; }
+.weather-symbol { width: 25px; font-size: 21px; text-align: center; }.wind-icon { width: 24px; height: 24px; object-fit: contain; }
+.weather-caption { margin-left: 2px; color: #bdc1c8; font-size: 15px; }.weather-value { margin-left: 4px; color: #ffffff; font-size: 18px; font-weight: bold; }
+.cyan { color: #10d4ff; }.blue { color: #30c8ff; }
+
+.activity-stage { width: 420px; height: 365px; }
+.ring-base, .ring-progress { layer-color: transparent; start-angle: 0deg; total-angle: 300deg; }
+.ring-base { color: #25282d; }.move-ring { color: #ff1767; }.exercise-ring { color: #98ef00; }.stand-ring { color: #12c9e5; }
+.ring-outer { width: 394px; height: 394px; margin-left: 13px; stroke-width: 27px; }
+.ring-middle { width: 324px; height: 324px; margin-left: 48px; margin-top: 35px; stroke-width: 25px; }
+.ring-inner { width: 258px; height: 258px; margin-left: 81px; margin-top: 68px; stroke-width: 23px; }
+.ring-arrow { width: 31px; height: 31px; border-radius: 16px; align-items: center; justify-content: center; }
+.ring-arrow-text { color: #071016; font-size: 23px; font-weight: bold; }
+.arrow-outer { margin-left: 194px; margin-top: 2px; background-color: #ff1767; }
+.arrow-middle { margin-left: 194px; margin-top: 37px; background-color: #98ef00; }
+.arrow-inner { margin-left: 194px; margin-top: 70px; background-color: #12c9e5; }
+.goal-list { width: 230px; height: 105px; margin-left: 130px; margin-top: 125px; flex-direction: column; }
+.goal-line { width: 230px; height: 34px; flex-direction: row; align-items: center; }
+.goal-icon { width: 24px; height: 24px; object-fit: contain; margin-right: 2px; }
+.goal-number { font-size: 26px; font-weight: bold; }.goal-total { margin-left: 3px; color: #e2e4e8; font-size: 15px; }
+.move-text { color: #ff2c70; }.exercise-text { color: #9df000; }.stand-text { color: #17cfe8; }
+.activity-bottom-mask { width: 420px; height: 150px; margin-top: 270px; background-color: #000000; }
+.activity-grid { width: 404px; height: 118px; margin-left: 8px; margin-top: 230px; flex-direction: row; flex-wrap: wrap; justify-content: space-between; }
+.activity-card { height: 54px; border-radius: 27px; background-color: #111318; border-width: 1px; border-color: #24272d; flex-direction: row; align-items: center; justify-content: center; }
+.card-top-left, .card-top-right { width: 198px; }.card-bottom-left { width: 178px; }.card-bottom-right { width: 218px; }
+.card-icon { width: 31px; height: 31px; object-fit: contain; margin-right: 5px; }.card-value { color: #ffffff; font-size: 22px; font-weight: bold; }.card-unit { margin-left: 4px; color: #a4a8af; font-size: 16px; }
+
+.health-stage { width: 420px; height: 365px; }
+.heart-image { width: 174px; height: 174px; margin-left: 214px; margin-top: 0; object-fit: contain; }
+.heart-copy { width: 165px; height: 100px; margin-left: 28px; margin-top: 63px; flex-direction: column; }
+.heart-caption { color: #d8dbe0; font-size: 18px; }.heart-number { height: 58px; flex-direction: row; align-items: flex-end; }
+.heart-value { color: #ffffff; font-size: 54px; line-height: 58px; font-weight: bold; }.heart-unit { color: #ff314c; font-size: 15px; margin-left: 5px; margin-bottom: 7px; }
+.heart-history { color: #858a92; font-size: 11px; }
+.health-row { height: 45px; border-radius: 23px; background-color: #111318; border-width: 1px; border-color: #24282e; flex-direction: row; align-items: center; padding-left: 15px; padding-right: 18px; }
+.health-row-1 { width: 400px; margin-left: 10px; margin-top: 166px; }.health-row-2 { width: 390px; margin-left: 15px; margin-top: 216px; }
+.health-row-3 { width: 372px; margin-left: 24px; margin-top: 266px; }.health-row-4 { width: 340px; margin-left: 40px; margin-top: 316px; }
+.health-icon { width: 32px; height: 32px; margin-right: 10px; object-fit: contain; border-radius: 16px; }
+.health-label { flex: 1; color: #c8ccd2; font-size: 18px; }.health-value { color: #ffffff; font-size: 19px; font-weight: bold; }
+
+</style>

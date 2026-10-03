@@ -1,0 +1,76 @@
+<template>
+  <div class="time-container">
+    <div class="date-row">
+      <text class="weekday-text">{{ weekday }}</text>
+      <text class="date-separator">·</text>
+      <text class="date-text">{{ date }}</text>
+    </div>
+    <div class="time-row">
+      <text class="time-text">{{ time }}</text>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    time: {
+      type: String,
+      default: '00:00'
+    },
+    date: {
+      type: String,
+      default: '01/01'
+    },
+    weekday: {
+      type: String,
+      default: '周一'
+    }
+  }
+}
+</script>
+
+<style>
+.time-container {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.date-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.weekday-text {
+  font-size: 18px;
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.date-separator {
+  font-size: 16px;
+  color: #666666;
+  margin: 0 8px;
+}
+
+.date-text {
+  font-size: 18px;
+  color: #cccccc;
+}
+
+.time-row {
+  align-items: center;
+  justify-content: center;
+}
+
+.time-text {
+  font-size: 72px;
+  color: #ffffff;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+</style>

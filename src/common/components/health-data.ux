@@ -1,0 +1,103 @@
+<template>
+  <div class="health-container">
+    <!-- 心率 -->
+    <div class="health-item">
+      <div class="icon-circle heart-icon-bg">
+        <text class="health-icon">♥</text>
+      </div>
+      <text class="health-value">{{ heartRate }}</text>
+      <text class="health-label">心率 BPM</text>
+    </div>
+
+    <!-- 血氧 -->
+    <div class="health-item">
+      <div class="icon-circle oxygen-icon-bg">
+        <text class="health-icon">O₂</text>
+      </div>
+      <text class="health-value">{{ bloodOxygen }}%</text>
+      <text class="health-label">血氧</text>
+    </div>
+
+    <!-- 温度 -->
+    <div class="health-item">
+      <div class="icon-circle temp-icon-bg">
+        <text class="health-icon">T°</text>
+      </div>
+      <text class="health-value">{{ temperature }}</text>
+      <text class="health-label">体温 ℃</text>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    heartRate: {
+      type: Number,
+      default: 72
+    },
+    bloodOxygen: {
+      type: Number,
+      default: 98
+    },
+    temperature: {
+      type: Number,
+      default: 36.5
+    }
+  }
+}
+</script>
+
+<style>
+.health-container {
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  padding: 10px 5px;
+}
+
+.health-item {
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+}
+
+.icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.heart-icon-bg {
+  background-color: #ff3b30;
+}
+
+.oxygen-icon-bg {
+  background-color: #5ac8fa;
+}
+
+.temp-icon-bg {
+  background-color: #ff9500;
+}
+
+.health-icon {
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.health-value {
+  font-size: 24px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.health-label {
+  font-size: 11px;
+  color: #888888;
+}
+</style>

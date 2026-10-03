@@ -1,0 +1,225 @@
+<template>
+  <list class="detail-page" bounces="true">
+    <list-item type="detail-content" class="detail-content">
+      <div class="rect-detail">
+        <div class="top-bar">
+          <div class="back-btn" onclick="goBack"><text class="back-text">‹</text></div>
+          <text class="page-title">健康详情</text>
+          <div class="today-badge"><text class="today-text">今日</text></div>
+        </div>
+
+        <div class="activity-card">
+          <stack class="detail-activity-rings">
+            <progress class="detail-ring-base detail-outer" type="arc" percent="100"></progress>
+            <progress class="detail-ring-progress move-ring detail-outer" type="arc" percent="{{ movePercent }}"></progress>
+            <progress class="detail-ring-base detail-middle" type="arc" percent="100"></progress>
+            <progress class="detail-ring-progress exercise-ring detail-middle" type="arc" percent="{{ exercisePercent }}"></progress>
+            <progress class="detail-ring-base detail-inner" type="arc" percent="100"></progress>
+            <progress class="detail-ring-progress stand-ring detail-inner" type="arc" percent="{{ standPercent }}"></progress>
+          </stack>
+          <div class="activity-copy">
+            <text class="activity-title">运动环</text>
+            <div class="activity-line"><div class="legend-dot move-dot"></div><text class="activity-name move-text">活动</text><text class="activity-data">{{ calories }}/{{ caloriesGoal }} 千卡</text><text class="activity-percent move-text">{{ movePercentLabel }}%</text></div>
+            <div class="activity-line"><div class="legend-dot exercise-dot"></div><text class="activity-name exercise-text">锻炼</text><text class="activity-data">{{ exerciseMinutes }}/{{ exerciseGoal }} 分钟</text><text class="activity-percent exercise-text">{{ exercisePercentLabel }}%</text></div>
+            <div class="activity-line"><div class="legend-dot stand-dot"></div><text class="activity-name stand-text">站立</text><text class="activity-data">{{ standHours }}/{{ standGoal }} 小时</text><text class="activity-percent stand-text">{{ standPercentLabel }}%</text></div>
+          </div>
+        </div>
+
+        <div class="health-section">
+          <div class="section-heading">
+            <text class="section-title">健康指标</text>
+            <div class="all-normal"><div class="normal-dot"></div><text class="all-normal-text">全部正常</text></div>
+          </div>
+
+          <div class="health-detail-item">
+            <image class="health-icon-image" src="/common/images/health/heart.png"></image>
+            <div class="health-info"><text class="health-name">心率</text><div class="value-row"><text class="health-val">{{ heartRate }}</text><text class="health-unit">BPM</text></div></div>
+            <div class="status-pill"><text class="status-text">正常</text></div>
+          </div>
+          <div class="health-detail-item">
+            <image class="health-icon-image" src="/common/images/health/oxygen.png"></image>
+            <div class="health-info"><text class="health-name">血氧饱和度</text><div class="value-row"><text class="health-val">{{ bloodOxygen }}</text><text class="health-unit">%</text></div></div>
+            <div class="status-pill"><text class="status-text">正常</text></div>
+          </div>
+          <div class="health-detail-item">
+            <image class="health-icon-image" src="/common/images/health/temperature.png"></image>
+            <div class="health-info"><text class="health-name">体温</text><div class="value-row"><text class="health-val">{{ temperature }}</text><text class="health-unit">℃</text></div></div>
+            <div class="status-pill"><text class="status-text">正常</text></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="round-detail">
+        <div class="round-header">
+          <div class="round-back-btn" onclick="goBack"><text class="round-back-text">‹</text></div>
+          <text class="round-title">健康详情</text>
+          <div class="round-status-dot"></div>
+        </div>
+
+        <div class="round-activity-card">
+          <stack class="round-detail-rings">
+            <progress class="round-detail-base round-detail-outer" type="arc" percent="100"></progress>
+            <progress class="round-detail-progress move-ring round-detail-outer" type="arc" percent="{{ movePercent }}"></progress>
+            <progress class="round-detail-base round-detail-middle" type="arc" percent="100"></progress>
+            <progress class="round-detail-progress exercise-ring round-detail-middle" type="arc" percent="{{ exercisePercent }}"></progress>
+            <progress class="round-detail-base round-detail-inner" type="arc" percent="100"></progress>
+            <progress class="round-detail-progress stand-ring round-detail-inner" type="arc" percent="{{ standPercent }}"></progress>
+          </stack>
+          <div class="round-activity-copy">
+            <text class="round-activity-title">运动环</text>
+            <div class="round-activity-line"><div class="round-legend move-dot"></div><text class="round-activity-name">活动</text><text class="round-activity-data">{{ calories }}/{{ caloriesGoal }}</text></div>
+            <div class="round-activity-line"><div class="round-legend exercise-dot"></div><text class="round-activity-name">锻炼</text><text class="round-activity-data">{{ exerciseMinutes }}/{{ exerciseGoal }} 分</text></div>
+            <div class="round-activity-line"><div class="round-legend stand-dot"></div><text class="round-activity-name">站立</text><text class="round-activity-data">{{ standHours }}/{{ standGoal }} 时</text></div>
+          </div>
+        </div>
+
+        <div class="round-health-item round-heart-item">
+          <image class="round-health-icon" src="/common/images/health/heart.png"></image>
+          <text class="round-health-name">心率</text>
+          <text class="round-health-value">{{ heartRate }}</text><text class="round-health-unit">BPM</text>
+          <text class="round-normal">正常</text>
+        </div>
+        <div class="round-health-item round-oxygen-item">
+          <image class="round-health-icon" src="/common/images/health/oxygen.png"></image>
+          <text class="round-health-name">血氧</text>
+          <text class="round-health-value">{{ bloodOxygen }}</text><text class="round-health-unit">%</text>
+          <text class="round-normal">正常</text>
+        </div>
+        <div class="round-health-item round-temperature-item">
+          <image class="round-health-icon" src="/common/images/health/temperature.png"></image>
+          <text class="round-health-name">体温</text>
+          <text class="round-health-value">{{ temperature }}</text><text class="round-health-unit">℃</text>
+          <text class="round-normal">正常</text>
+        </div>
+      </div>
+    </list-item>
+  </list>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  protected: {
+    steps: 4924,
+    stepsGoal: 10000,
+    calories: 320,
+    caloriesGoal: 500,
+    exerciseMinutes: 22,
+    exerciseGoal: 30,
+    standHours: 9,
+    standGoal: 12,
+    distance: 3.2,
+    distanceGoal: 5.0,
+    heartRate: 72,
+    bloodOxygen: 98,
+    temperature: 36.5
+  },
+
+  computed: {
+    movePercent() { return this.getPercent(this.calories, this.caloriesGoal) },
+    exercisePercent() { return this.getPercent(this.exerciseMinutes, this.exerciseGoal) },
+    standPercent() { return this.getPercent(this.standHours, this.standGoal) },
+    movePercentLabel() { return Math.round(this.movePercent) },
+    exercisePercentLabel() { return Math.round(this.exercisePercent) },
+    standPercentLabel() { return Math.round(this.standPercent) }
+  },
+
+  getPercent(value, goal) {
+    const numericGoal = Number(goal)
+    if (numericGoal <= 0) return 0
+    return Math.max(0, Math.min((Number(value) / numericGoal) * 100, 100))
+  },
+  goBack() { router.back() }
+}
+</script>
+
+<style>
+.detail-page { width: 100%; height: 100%; background-color: #000000; }
+.detail-content { width: 100%; height: 666px; flex-direction: column; align-items: center; padding-top: 18px; padding-bottom: 20px; }
+.rect-detail { width: 100%; flex-direction: column; align-items: center; }
+.round-detail { display: none; }
+.top-bar { width: 390px; height: 54px; flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+.back-btn, .today-badge { width: 62px; height: 38px; border-radius: 19px; background-color: #17191d; align-items: center; justify-content: center; }
+.back-text { font-size: 34px; line-height: 36px; color: #ffffff; }
+.page-title { font-size: 27px; color: #ffffff; font-weight: bold; }
+.today-text { font-size: 14px; color: #a8f31b; font-weight: bold; }
+.activity-card { width: 410px; height: 200px; border-radius: 31px; background-color: #15171a; border-width: 2px; border-color: #292c31; flex-direction: row; align-items: center; padding-left: 14px; padding-right: 14px; margin-bottom: 10px; }
+.detail-activity-rings { width: 170px; height: 170px; margin-right: 14px; }
+.detail-ring-base, .detail-ring-progress { layer-color: transparent; start-angle: 0deg; total-angle: 360deg; }
+.detail-ring-base { color: #282a30; }
+.detail-outer { width: 170px; height: 170px; stroke-width: 13px; }
+.detail-middle { width: 130px; height: 130px; stroke-width: 12px; margin-left: 20px; margin-top: 20px; }
+.detail-inner { width: 92px; height: 92px; stroke-width: 11px; margin-left: 39px; margin-top: 39px; }
+.move-ring { color: #ff006e; }
+.exercise-ring { color: #a8f000; }
+.stand-ring { color: #00d8d8; }
+.activity-copy { width: 198px; height: 174px; flex-direction: column; justify-content: center; }
+.activity-title { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 7px; }
+.activity-line { width: 198px; height: 38px; flex-direction: row; align-items: center; border-bottom-width: 1px; border-bottom-color: #33363b; }
+.legend-dot { width: 9px; height: 9px; border-radius: 5px; margin-right: 7px; }
+.move-dot { background-color: #ff006e; }
+.exercise-dot { background-color: #a8f000; }
+.stand-dot { background-color: #00d8d8; }
+.activity-name { width: 44px; font-size: 14px; font-weight: bold; }
+.move-text { color: #ff3c8d; }
+.exercise-text { color: #b8f43a; }
+.stand-text { color: #24dddd; }
+.activity-data { width: 103px; font-size: 12px; color: #e4e5e8; }
+.activity-percent { width: 37px; font-size: 14px; text-align: right; font-weight: bold; }
+.health-section { width: 410px; flex-direction: column; align-items: center; }
+.section-heading { width: 100%; height: 30px; flex-direction: row; align-items: center; justify-content: space-between; padding-left: 4px; padding-right: 4px; }
+.section-title { font-size: 18px; color: #ffffff; font-weight: bold; }
+.all-normal { height: 24px; flex-direction: row; align-items: center; }
+.normal-dot { width: 7px; height: 7px; border-radius: 4px; background-color: #72e83b; margin-right: 6px; }
+.all-normal-text { font-size: 13px; color: #72e83b; }
+.health-detail-item { width: 410px; height: 91px; border-radius: 28px; background-color: #15171a; flex-direction: row; align-items: center; padding-left: 12px; padding-right: 14px; margin-bottom: 7px; }
+.health-icon-image { width: 50px; height: 50px; margin-right: 13px; }
+.health-info { flex: 1; flex-direction: column; justify-content: center; }
+.health-name { font-size: 13px; color: #8b8e94; }
+.value-row { height: 29px; flex-direction: row; align-items: flex-end; }
+.health-val { font-size: 23px; color: #ffffff; font-weight: bold; }
+.health-unit { font-size: 13px; color: #c4c5c8; margin-left: 5px; margin-bottom: 3px; }
+.status-pill { width: 53px; height: 27px; border-radius: 14px; background-color: #18341d; align-items: center; justify-content: center; }
+.status-text { font-size: 12px; color: #72e83b; font-weight: bold; }
+
+.round-header { width: 246px; height: 38px; flex-direction: row; align-items: center; justify-content: space-between; }
+.round-back-btn { width: 38px; height: 38px; border-radius: 19px; background-color: #17191d; align-items: center; justify-content: center; }
+.round-back-text { font-size: 29px; line-height: 33px; color: #ffffff; }
+.round-title { font-size: 23px; color: #ffffff; font-weight: bold; }
+.round-status-dot { width: 10px; height: 10px; border-radius: 5px; background-color: #72e83b; margin-left: 14px; margin-right: 14px; }
+.round-activity-card { width: 354px; height: 144px; border-radius: 72px; background-color: #15171a; border-width: 2px; border-color: #30333a; flex-direction: row; align-items: center; padding-left: 15px; padding-right: 18px; margin-top: 6px; margin-bottom: 7px; }
+.round-detail-rings { width: 122px; height: 122px; margin-right: 18px; }
+.round-detail-base, .round-detail-progress { layer-color: transparent; start-angle: 0deg; total-angle: 360deg; }
+.round-detail-base { color: #282a30; }
+.round-detail-outer { width: 122px; height: 122px; stroke-width: 11px; }
+.round-detail-middle { width: 92px; height: 92px; stroke-width: 10px; margin-left: 15px; margin-top: 15px; }
+.round-detail-inner { width: 64px; height: 64px; stroke-width: 9px; margin-left: 29px; margin-top: 29px; }
+.round-activity-copy { width: 174px; height: 122px; flex-direction: column; justify-content: center; }
+.round-activity-title { font-size: 19px; color: #ffffff; font-weight: bold; margin-bottom: 4px; }
+.round-activity-line { width: 178px; height: 23px; flex-direction: row; align-items: center; }
+.round-legend { width: 8px; height: 8px; border-radius: 4px; margin-right: 6px; }
+.round-activity-name { width: 43px; font-size: 12px; color: #b9bbc0; }
+.round-activity-data { font-size: 12px; color: #ffffff; }
+.round-health-item { height: 62px; border-radius: 31px; background-color: #15171a; border-width: 2px; border-color: #292c31; flex-direction: row; align-items: center; padding-left: 8px; padding-right: 13px; margin-bottom: 6px; }
+.round-heart-item { width: 356px; }
+.round-oxygen-item { width: 324px; }
+.round-temperature-item { width: 288px; height: 56px; border-radius: 28px; margin-bottom: 0px; }
+.round-health-icon { width: 42px; height: 42px; margin-right: 9px; }
+.round-health-name { width: 67px; font-size: 13px; color: #a7a9ae; }
+.round-health-value { font-size: 21px; color: #ffffff; font-weight: bold; }
+.round-health-unit { flex: 1; font-size: 10px; color: #c5c6c9; margin-left: 4px; }
+.round-normal { font-size: 10px; color: #72e83b; font-weight: bold; }
+
+@media (shape: circle) {
+  .detail-content { height: 466px; padding-top: 0px; padding-bottom: 0px; }
+  .rect-detail { display: none; }
+  .round-detail { display: flex; width: 100%; height: 466px; flex-direction: column; align-items: center; padding-top: 17px; padding-bottom: 14px; }
+}
+
+@media (shape: pill-shaped) {
+  .detail-content { height: 780px; padding-top: 30px; padding-bottom: 30px; }
+  .activity-card, .health-section, .health-detail-item { width: 380px; }
+  .top-bar { width: 350px; }
+}
+</style>

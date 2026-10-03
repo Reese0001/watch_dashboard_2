@@ -1,0 +1,118 @@
+<template>
+  <div class="ring-container">
+    <progress
+      class="ring-progress ring-red"
+      type="arc"
+      percent="{{ normalizedProgress }}"
+      if="{{ color === '#ff3b30' }}"
+    ></progress>
+    <progress
+      class="ring-progress ring-yellow"
+      type="arc"
+      percent="{{ normalizedProgress }}"
+      if="{{ color === '#ffcc00' }}"
+    ></progress>
+    <progress
+      class="ring-progress ring-green"
+      type="arc"
+      percent="{{ normalizedProgress }}"
+      if="{{ color === '#4cd964' }}"
+    ></progress>
+
+    <!-- 中心内容 -->
+    <div class="ring-center">
+      <text class="ring-value">{{ displayValue }}</text>
+      <text class="ring-label">{{ label }}</text>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    progress: {
+      type: Number,
+      default: 0
+    },
+    color: {
+      type: String,
+      default: '#ff3b30'
+    },
+    value: {
+      type: String,
+      default: '0'
+    },
+    label: {
+      type: String,
+      default: ''
+    }
+  },
+
+  computed: {
+    normalizedProgress() {
+      return Math.max(0, Math.min(Number(this.progress) || 0, 100))
+    },
+
+    displayValue() {
+      return this.value || '0'
+    }
+  }
+}
+</script>
+
+<style>
+.ring-container {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 背景环 */
+.ring-progress {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  stroke-width: 10px;
+  layer-color: #1a1a1a;
+  start-angle: 0deg;
+  total-angle: 360deg;
+}
+
+.ring-red {
+  color: #ff3b30;
+}
+
+.ring-yellow {
+  color: #ffcc00;
+}
+
+.ring-green {
+  color: #4cd964;
+}
+
+/* 中心区域 */
+.ring-center {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: #000000;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ring-value {
+  font-size: 22px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.ring-label {
+  font-size: 12px;
+  color: #888888;
+  margin-top: 2px;
+}
+</style>

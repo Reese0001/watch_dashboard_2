@@ -1,0 +1,55 @@
+{
+  "package": "com.application.watch.dashboard",
+  "name": "watch_dashboard",
+  "versionName": "1.0.2",
+  "versionCode": 3,
+  "minPlatformVersion": 1000,
+  "icon": "/common/logo.png",
+  "deviceTypeList": [
+    "watch"
+  ],
+  "features": [
+    {
+      "name": "service.health"
+    },
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.sensor"
+    },
+    {
+      "name": "system.fetch"
+    },
+    {
+      "name": "system.geolocation"
+    },
+    {
+      "name": "system.storage"
+    },
+    {
+      "name": "system.network"
+    }
+  ],
+  "permissions": [
+    {
+      "name": "hapjs.permission.LOCATION"
+    }
+  ],
+  "allowedDomains": [
+    "api.open-meteo.com",
+    "api.bigdatacloud.net"
+  ],
+  "config": {
+    "logLevel": "log",
+    "designWidth": 466
+  },
+  "router": {
+    "entry": "pages/s4",
+    "pages": {
+      "pages/s4": {
+        "component": "s4"
+      }
+    }
+  }
+}
